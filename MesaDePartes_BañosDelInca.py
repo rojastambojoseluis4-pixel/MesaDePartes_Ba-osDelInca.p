@@ -1,20 +1,28 @@
 ﻿import os
 
-def main():
-    """Función de Control de Flujo Principal"""
+MAX_EXPEDIENTES = 100
+codigos = [""] * MAX_EXPEDIENTES
+ciudadanos = [""] * MAX_EXPEDIENTES
+asuntos = [""] * MAX_EXPEDIENTES
+total_expedientes = 0
+
+def buscar_indice_por_codigo(codigo_buscar):
+    for i in range(total_expedientes):
+        if codigos[i].lower() == codigo_buscar.lower(): return i
+    return -1
+
+def registrar_expediente():
+    global total_expedientes
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("--- REGISTRO DE NUEVO EXPEDIENTE EDIL ---")
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print("====================================================")
-        print("     MUNICIPALIDAD DISTRITAL DE BAÑOS DEL INCA      ")
-        print("          SISTEMA DE MESA DE PARTES DIGITAL         ")
-        print("====================================================")
-        print(" 1. Registrar nuevo expediente")
-        print(" 2. Buscar expediente por código")
-        print(" 3. Ordenar y mostrar expedientes")
-        print(" 4. Salir de la aplicación")
-        print("====================================================")
-        
-        opcion = input("Seleccione una opción (1-4): ").strip()
-        if opcion == "4":
-            print("\nCerrando el sistema... ¡Hasta luego!")
-            break
+        codigo = input("Ingrese código del expediente: ").strip().upper()
+        if not codigo: continue
+        if buscar_indice_por_codigo(codigo) != -1: continue
+        break
+    ciudadano = input("Ingrese nombre completo: ").strip().upper()
+    asunto = input("Ingrese el asunto: ").strip().upper()
+    codigos[total_expedientes] = codigo
+    ciudadanos[total_expedientes] = ciudadano
+    asuntos[total_expedientes] = asunto
+    total_expedientes += 1
